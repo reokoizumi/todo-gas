@@ -1,7 +1,19 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { viteSingleFile } from "vite-plugin-singlefile";
+import { viteStaticCopy } from 'vite-plugin-static-copy'
 
 export default defineConfig({
-  plugins: [react(), viteSingleFile()],
+  plugins: [
+    react(), 
+    viteSingleFile(),
+    viteStaticCopy({
+      targets: [
+        {
+          src: 'gas/*',
+          dest: './'
+        }
+      ]
+    })
+  ],
 })
