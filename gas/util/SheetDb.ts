@@ -25,6 +25,23 @@ export class SheetDb {
   }
 
   /**
+    * 行を指定して1行取得
+    * @param sheetName シート名　
+    * @param rowIndex 行インデックス
+    * @return
+    */
+  findBy(sheetName: string, rowIndex: number): any[] {
+    const sheet: Sheet | null = this.spreadSheet.getSheetByName(sheetName)
+    // let table: any[][] = []
+    if (sheet == null) {
+      console.error('シート名がnullです。')
+      return
+    }
+    const record = sheet.getRange(rowIndex, 1, 1, sheet.getLastColumn()).getValues()[0]
+    return JSON.parse(JSON.stringify(record))
+  }
+
+  /**
     * 最終行を取得
     * @param sheetName シート名
     * @return 最終行
@@ -37,6 +54,7 @@ export class SheetDb {
     }
     return sheet.getLastRow()
   }
+
 
   /**
     * データの挿入
@@ -52,4 +70,21 @@ export class SheetDb {
     }
     sheet.appendRow(values)
   }
+
+  /**
+    * 行の更新
+    * @param sheetName シート名
+    * @param rowIndex 行のインデックス
+    * @param values 1行分の配列
+    * @return void
+    */
+  update(sheetName: string, rowIndex: number, values: any[]) {
+    const sheet: Sheet | null = this.spreadSheet.getSheetByName(sheetName)
+    if (sheet == null) {
+      console.error('シート名がnullです。')
+      return
+    }
+    sheet.getRange(rowIndex, 1, 1, values.length).setValues([values])
+  }
+
 }
