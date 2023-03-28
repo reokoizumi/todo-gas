@@ -32,7 +32,6 @@ export class SheetDb {
     */
   findBy(sheetName: string, rowIndex: number): any[] {
     const sheet: Sheet | null = this.spreadSheet.getSheetByName(sheetName)
-    // let table: any[][] = []
     if (sheet == null) {
       console.error('シート名がnullです。')
       return
@@ -42,10 +41,10 @@ export class SheetDb {
   }
 
   /**
-    * 最終行を取得
-    * @param sheetName シート名
-    * @return 最終行
-    */
+   * 最終行を取得
+   * @param sheetName シート名
+   * @return 最終行
+   */
   getLastRowNumber(sheetName: string): number {
     const sheet: Sheet | null = this.spreadSheet.getSheetByName(sheetName)
     if (sheet == null) {
@@ -87,4 +86,18 @@ export class SheetDb {
     sheet.getRange(rowIndex, 1, 1, values.length).setValues([values])
   }
 
+  /**
+    * 行の削除
+    * @param sheetName シート名
+    * @param rowIndex 行のインデックス
+    * @return void
+    */
+  delete(sheetName: string, rowIndex: number) {
+    const sheet: Sheet | null = this.spreadSheet.getSheetByName(sheetName)
+    if (sheet == null) {
+      console.error('シート名がnullです。')
+      return
+    }
+    sheet.getRange(rowIndex, 1, 1, sheet.getLastColumn()).clearContent()
+  }
 }

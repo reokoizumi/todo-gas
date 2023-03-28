@@ -7,5 +7,4 @@ function updateTodoStatusBy(todoId: number) {
   const todo: Todo = {id, task, done}
 
   sheetDb.update(SHEET_NAME, todoId + 1, Object.values({...todo, done: !todo.done}))
-  return todo
 }
