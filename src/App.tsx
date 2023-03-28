@@ -1,35 +1,45 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useEffect, useState } from 'react'
+import './index.css'
+import { Todo } from './types/Todo';
+import TodoForm from './components/TodoForm';
+import TodoList from './components/TodoList';
+import { addNewTodo, fetchAllTodos, updateTodo, deleteTodo } from './api/todoApi'
 
-function App() {
-  const [count, setCount] = useState(0)
+const App = () => {
+  const [todos, setTodos] = useState<Todo[]>([])
+
+  useEffect(() => {
+    const loaldTodos = async () => {
+      const allTodos = await fetchAllTodos()
+      setTodos(allTodos)
+    }
+    loaldTodos()
+  }, [])
+
+  const handleAdd = async (task: string) => {
+    await addNewTodo(task)
+    const updateTodos = await fetchAllTodos()
+    setTodos(updateTodos)
+  }
+
+  const handleToggle = async (id: number) => {
+    await updateTodo(id)
+    const updateTodos = await fetchAllTodos()
+    setTodos(updateTodos)
+  }
+
+  const handleDelete = async (id: number) => {
+    await deleteTodo(id)
+    const updateTodos = await fetchAllTodos()
+    setTodos(updateTodos)
+  }
 
   return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+    <div className="max-w-md mx-auto mt-8">
+      <h1 className="text-4xl font-bold mb-4">Todo List</h1>
+      <TodoForm onAdd={handleAdd}/>
+      <TodoList todos={todos} onToggle={handleToggle} onDelete={handleDelete} />
     </div>
   )
 }
-
 export default App
