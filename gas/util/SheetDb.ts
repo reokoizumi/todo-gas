@@ -9,17 +9,22 @@ export class SheetDb {
     this.spreadSheet = spreadSheet
   }
 
+  getSheet(sheetName: string): Sheet {
+    const sheet: Sheet | null = this.spreadSheet.getSheetByName(sheetName)
+    if (sheet == null) {
+      console.error('${sheetName}のシートが存在しません')
+      return
+    }
+    return sheet
+  }
+
   /**
     * レコードの全取得
     * @param sheetName シート名
     * @return 
     */
   findAll(sheetName: string): any[][] {
-    const sheet: Sheet | null = this.spreadSheet.getSheetByName(sheetName)
-    if (sheet == null) {
-      console.error('シート名がnullです。')
-      return
-    }
+    const sheet: Sheet = this.getSheet(sheetName)
     const table: any[][] = sheet.getDataRange().getValues().slice(1)
     return JSON.parse(JSON.stringify(table))
   }
@@ -31,11 +36,7 @@ export class SheetDb {
     * @return
     */
   findBy(sheetName: string, rowIndex: number): any[] {
-    const sheet: Sheet | null = this.spreadSheet.getSheetByName(sheetName)
-    if (sheet == null) {
-      console.error('シート名がnullです。')
-      return
-    }
+    const sheet: Sheet = this.getSheet(sheetName)
     const record = sheet.getRange(rowIndex, 1, 1, sheet.getLastColumn()).getValues()[0]
     return JSON.parse(JSON.stringify(record))
   }
@@ -46,11 +47,7 @@ export class SheetDb {
    * @return 最終行
    */
   getLastRowNumber(sheetName: string): number {
-    const sheet: Sheet | null = this.spreadSheet.getSheetByName(sheetName)
-    if (sheet == null) {
-      console.error('シート名がnullです。')
-      return
-    }
+    const sheet: Sheet = this.getSheet(sheetName)
     return sheet.getLastRow()
   }
 
@@ -62,11 +59,7 @@ export class SheetDb {
     * @return void
     */
   insert(sheetName: string, values: any[]) {
-    const sheet: Sheet | null = this.spreadSheet.getSheetByName(sheetName)
-    if (sheet == null) {
-      console.error('シート名がnullです。')
-      return
-    }
+    const sheet: Sheet = this.getSheet(sheetName)
     sheet.appendRow(values)
   }
 
@@ -78,11 +71,7 @@ export class SheetDb {
     * @return void
     */
   update(sheetName: string, rowIndex: number, values: any[]) {
-    const sheet: Sheet | null = this.spreadSheet.getSheetByName(sheetName)
-    if (sheet == null) {
-      console.error('シート名がnullです。')
-      return
-    }
+    const sheet: Sheet = this.getSheet(sheetName)
     sheet.getRange(rowIndex, 1, 1, values.length).setValues([values])
   }
 
@@ -93,11 +82,7 @@ export class SheetDb {
     * @return void
     */
   delete(sheetName: string, rowIndex: number) {
-    const sheet: Sheet | null = this.spreadSheet.getSheetByName(sheetName)
-    if (sheet == null) {
-      console.error('シート名がnullです。')
-      return
-    }
+    const sheet: Sheet = this.getSheet(sheetName)
     sheet.getRange(rowIndex, 1, 1, sheet.getLastColumn()).clearContent()
   }
 }
