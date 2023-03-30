@@ -3,9 +3,8 @@ import { SheetDb } from "../util/SheetDb";
 
 function createNew(task: string) {
   const sheetDb: SheetDb = new SheetDb(SpreadsheetApp.getActiveSpreadsheet())
-  const newId: number = sheetDb.getLastRowNumber(SHEET_NAME)
   const newTodo: Todo = {
-    id: newId, 
+    id: Utilities.getUuid(), 
     task: task, 
     done: false
   }

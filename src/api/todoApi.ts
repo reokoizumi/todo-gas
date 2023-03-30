@@ -17,7 +17,7 @@ export const addNewTodo = async (task: string) => {
   }
 }
 
-export const updateTodo = async (id: number) => {
+export const updateTodo = async (id: string) => {
   try {
     await googleScriptRun("updateTodoStatusBy", id)
   } catch(error) {
@@ -25,7 +25,7 @@ export const updateTodo = async (id: number) => {
   }
 }
 
-export const deleteTodo = async (id: number) => {
+export const deleteTodo = async (id: string) => {
   try {
     await googleScriptRun("deleteTodoBy", id)
   } catch(error) {

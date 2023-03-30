@@ -22,13 +22,13 @@ const App = () => {
     setTodos(updateTodos)
   }
 
-  const handleToggle = async (id: number) => {
+  const handleToggle = async (id: string) => {
     await updateTodo(id)
     const updateTodos = await fetchAllTodos()
     setTodos(updateTodos)
   }
 
-  const handleDelete = async (id: number) => {
+  const handleDelete = async (id: string) => {
     await deleteTodo(id)
     const updateTodos = await fetchAllTodos()
     setTodos(updateTodos)

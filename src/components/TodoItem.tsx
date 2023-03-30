@@ -2,8 +2,8 @@ import { Todo } from "../types/Todo"
 
 interface TodoItemProps {
   todo: Todo
-  onToggle: (id: number) => void
-  onDelete: (id: number) => void
+  onToggle: (id: string) => void
+  onDelete: (id: string) => void
 }
 
 export const TodoItem = ({ todo, onToggle, onDelete }: TodoItemProps) => {
