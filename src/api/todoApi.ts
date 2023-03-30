@@ -11,9 +11,9 @@ export const fetchAllTodos = async () => {
 
 export const addNewTodo = async (task: string) => {
   try {
-    await googleScriptRun("postNew", task)
+    await googleScriptRun("createNew", task)
   } catch(error) {
-    console.error('Error posting data', error)
+    console.error('Error creating data', error)
   }
 }
 
