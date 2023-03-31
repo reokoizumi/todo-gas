@@ -13,7 +13,7 @@ export class SheetDb {
   getSheet(sheetName: string): Sheet {
     const sheet: Sheet | null = this.spreadSheet.getSheetByName(sheetName)
     if (sheet == null) {
-      console.error('${sheetName}のシートが存在しません')
+      console.error(`${sheetName}のシートが存在しません`)
       return
     }
     return sheet
@@ -53,7 +53,7 @@ export class SheetDb {
     const record = sheet.getRange(1, 2, sheet.getLastRow()).getValues()
     const rowIndex = record.flat().filter((value, index) => (value === id) ? index : null)
     if (!rowIndex) {
-      console.error('${id}が存在しません')
+      console.error(`${id}が存在しません`)
       return
     }
     return rowIndex
