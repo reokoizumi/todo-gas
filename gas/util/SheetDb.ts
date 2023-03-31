@@ -1,4 +1,3 @@
-import { element } from "prop-types";
 import SpreadSheet = GoogleAppsScript.Spreadsheet.Spreadsheet;
 import Sheet = GoogleAppsScript.Spreadsheet.Sheet;
 
