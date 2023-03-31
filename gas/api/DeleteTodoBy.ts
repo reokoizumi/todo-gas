@@ -1,7 +1,9 @@
 import { SheetDb } from "../util/SheetDb";
 
-function deleteTodoBy(id: number) {
+function deleteTodoBy(todoId: number) {
   const sheetDb: SheetDb = new SheetDb(SpreadsheetApp.getActiveSpreadsheet())
-  sheetDb.delete(SHEET_NAME, id + 1)
+  const records: any[][] = sheetDb.findAll(SHEET_NAME)
+  const rowIndex: number = records.findIndex(record => record[0] === todoId) + 2
+  sheetDb.delete(SHEET_NAME, rowIndex)
   return
 }
